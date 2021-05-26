@@ -4,10 +4,10 @@
     <Version>5.11.5.0</Version>
     <AccountType>Basic</AccountType>
     <LibrariesFolder>easywsdl</LibrariesFolder>
-    <MainClass>BJWKPSPublicSoap</MainClass>
+    <MainClass>RENKPSPublicSoap</MainClass>
   </Info>
   <Settings>
-    <Url>https://tckimlik.nvi.gov.tr/service/kpspublic.asmx</Url>
+    <Url>https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx</Url>
     <ClassPrefix/>
     <PackageName>com.alihocaoglu.hrms.mernis</PackageName>
     <AddDocumentation>false</AddDocumentation>
@@ -29,13 +29,13 @@
     <DetectDictionaries>false</DetectDictionaries>
   </Settings>
   <Files>
-    <File>BJWDateTimeConverter.java</File>
-    <File>BJWExtendedSoapSerializationEnvelope.java</File>
-    <File>BJWHelper.java</File>
-    <File>BJWKPSPublicSoap.java</File>
-    <File>BJWKPSPublicSoap12.java</File>
-    <File>BJWMarshalGuid.java</File>
-    <File>BJWStandardDateTimeConverter.java</File>
+    <File>RENDateTimeConverter.java</File>
+    <File>RENExtendedSoapSerializationEnvelope.java</File>
+    <File>RENHelper.java</File>
+    <File>RENKPSPublicSoap.java</File>
+    <File>RENKPSPublicSoap12.java</File>
+    <File>RENMarshalGuid.java</File>
+    <File>RENStandardDateTimeConverter.java</File>
   </Files>
   <Libraries>
     <File>ExKsoap2-1.0.3.1.jar</File>

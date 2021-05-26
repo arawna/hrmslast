@@ -23,9 +23,9 @@ public class Employer extends User{
     @Column(name = "website")
     private String webSite;
 
-    @Column(name = "phonenumber")
-    private String phoneNumber;
-
     @Column(name = "isactived")
     private boolean isActive;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 }

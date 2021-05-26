@@ -12,7 +12,7 @@ package com.alihocaoglu.hrms.mernis;
 import java.util.Date;
 
 
-public interface BJWDateTimeConverter
+public interface RENDateTimeConverter
 {
     java.util.Date convertDateTime(String strDate);
     java.util.Date convertTime(String strDate);

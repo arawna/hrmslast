@@ -27,5 +27,4 @@ public class User {
 
     @Column(name = "mail_is_verify")
     private boolean mailVerify;
-
 }
