@@ -1,6 +1,7 @@
 package com.alihocaoglu.hrms.busines.concretes;
 
 import com.alihocaoglu.hrms.busines.abstracts.ActivationCodeService;
+import com.alihocaoglu.hrms.core.utilities.results.ErrorResult;
 import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.core.utilities.results.SuccessResult;
 import com.alihocaoglu.hrms.dataAccess.abstracts.ActivationCodeDao;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.nio.charset.Charset;
 import java.security.SecureRandom;
+import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -55,9 +58,20 @@ public class ActivationCodeManager implements ActivationCodeService {
 
     @Override
     public Result activateUser(String code) {
+
+        if(activationCodeDao.findByCode(code) == null){
+            return new ErrorResult("Kod hatalı");
+        }
+
         User user = userDao.getById(activationCodeDao.findByCode(code).getUserId());
         user.setMailVerify(true);
         userDao.save(user);
+
+        ActivationCode activationCode=activationCodeDao.findByCode(code);
+        activationCode.setVerifayed(true);
+        activationCode.setVerifyDate(LocalDate.now());
+        activationCodeDao.save(activationCode);
+
         return new SuccessResult("Kullanıcı aktif edildi");
     }
 

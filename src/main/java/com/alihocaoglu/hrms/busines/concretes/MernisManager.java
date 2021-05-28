@@ -19,7 +19,7 @@ public class MernisManager implements NationalValidationService {
                     Long.parseLong(candidate.getNationalNumber()),
                     candidate.getFirstName().toUpperCase(),
                     candidate.getLastName().toUpperCase(),
-                    candidate.getDateOfBirth().get(Calendar.YEAR)
+                    candidate.getDateOfBirth().getYear()
             );
         } catch (Exception e) {
             return false;

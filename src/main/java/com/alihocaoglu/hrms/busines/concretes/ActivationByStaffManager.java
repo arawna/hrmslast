@@ -10,6 +10,8 @@ import com.alihocaoglu.hrms.entities.concretes.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class ActivationByStaffManager implements ActivationByStaffService {
 
@@ -38,6 +40,7 @@ public class ActivationByStaffManager implements ActivationByStaffService {
 
         ActivationByStaff activationByStaff = activationByStaffDao.getById(activationByStaffId);
         activationByStaff.setVerifyed(true);
+        activationByStaff.setVerifyDate(LocalDate.now());
         activationByStaffDao.save(activationByStaff);
 
         return new SuccessResult("Kullanıcı aktif edildi");

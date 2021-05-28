@@ -1,9 +1,6 @@
 package com.alihocaoglu.hrms.busines.concretes;
 
-import com.alihocaoglu.hrms.busines.abstracts.ActivationByStaffService;
-import com.alihocaoglu.hrms.busines.abstracts.ActivationCodeService;
-import com.alihocaoglu.hrms.busines.abstracts.EmployerService;
-import com.alihocaoglu.hrms.busines.abstracts.UserService;
+import com.alihocaoglu.hrms.busines.abstracts.*;
 import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerDao;
 import com.alihocaoglu.hrms.entities.concretes.Employer;
@@ -21,13 +18,15 @@ public class EmployerManager implements EmployerService {
     private UserService userService;
     private ActivationByStaffService activationByStaffService;
     private ActivationCodeService activationCodeService;
+    private EmailService emailService;
 
     @Autowired
-    public EmployerManager(EmployerDao employerDao,UserService userService,ActivationByStaffService activationByStaffService,ActivationCodeService activationCodeService) {
+    public EmployerManager(EmployerDao employerDao,UserService userService,ActivationByStaffService activationByStaffService,ActivationCodeService activationCodeService,EmailService emailService) {
         this.employerDao = employerDao;
         this.userService=userService;
         this.activationByStaffService=activationByStaffService;
         this.activationCodeService=activationCodeService;
+        this.emailService=emailService;
     }
 
     @Override
@@ -54,8 +53,10 @@ public class EmployerManager implements EmployerService {
        employer.setMailVerify(false);
        this.employerDao.save(employer);
 
-       activationCodeService.createActivationCode(employer);
+       this.emailService.sendVerifyEmail(employer,this.activationCodeService.createActivationCode(employer));
        activationByStaffService.createActivationByStaff(employer);
+
+
 
        return new SuccessResult(employer.getEmail()+" Adresine doğrulama kodunuz gönderildi");
 

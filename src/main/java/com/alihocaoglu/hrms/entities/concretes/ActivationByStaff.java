@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Calendar;
 
 @Entity
@@ -29,5 +30,5 @@ public class ActivationByStaff {
     private boolean verifyed;
 
     @Column(name = "verify_date")
-    private Calendar verifyDate;
+    private LocalDate verifyDate;
 }

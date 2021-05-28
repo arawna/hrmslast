@@ -9,8 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -30,5 +29,5 @@ public class Candidate extends User{
     private String nationalNumber;
 
     @Column(name = "birthdate")
-    private Calendar dateOfBirth;
+    private LocalDate dateOfBirth;
 }
