@@ -4,6 +4,7 @@ import com.alihocaoglu.hrms.busines.abstracts.EmployerService;
 import com.alihocaoglu.hrms.core.utilities.results.DataResult;
 import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.entities.concretes.Employer;
+import com.alihocaoglu.hrms.entities.dtos.EmployerForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +27,7 @@ public class EmployerController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody Employer employer){
-        return this.employerService.add(employer);
+    public Result add(@RequestBody EmployerForRegisterDto employerForRegisterDto){
+        return this.employerService.add(employerForRegisterDto);
     }
 }

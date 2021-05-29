@@ -33,14 +33,18 @@ public class ActivationByStaffManager implements ActivationByStaffService {
     }
 
     @Override
-    public Result activateEmployer(int activationByStaffId) {
-        Employer employer = employerDao.getById(activationByStaffDao.getById(activationByStaffId).getEmployeId());
+    public Result activateEmployer(int employerId,int staffId) {
+
+        Employer employer = employerDao.getById(employerId);
         employer.setActive(true);
         employerDao.save(employer);
 
-        ActivationByStaff activationByStaff = activationByStaffDao.getById(activationByStaffId);
+
+
+        ActivationByStaff activationByStaff = activationByStaffDao.findByEmployeId(employerId);
         activationByStaff.setVerifyed(true);
         activationByStaff.setVerifyDate(LocalDate.now());
+        activationByStaff.setStaffId(staffId);
         activationByStaffDao.save(activationByStaff);
 
         return new SuccessResult("Kullanıcı aktif edildi");

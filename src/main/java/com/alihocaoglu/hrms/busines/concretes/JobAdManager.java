@@ -10,7 +10,7 @@ import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerDao;
 import com.alihocaoglu.hrms.dataAccess.abstracts.JobAdDao;
 import com.alihocaoglu.hrms.dataAccess.abstracts.JobPositionDao;
 import com.alihocaoglu.hrms.entities.concretes.JobAd;
-import com.alihocaoglu.hrms.entities.concretes.JobAdDto;
+import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

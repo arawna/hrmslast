@@ -4,6 +4,7 @@ import com.alihocaoglu.hrms.busines.abstracts.CandidateService;
 import com.alihocaoglu.hrms.core.utilities.results.DataResult;
 import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.entities.concretes.Candidate;
+import com.alihocaoglu.hrms.entities.dtos.CandidateForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,8 @@ public class CandidateController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody Candidate candidate){
-        return this.candidateService.add(candidate);
+    public Result add(@RequestBody CandidateForRegisterDto candidateForRegisterDto){
+        return this.candidateService.add(candidateForRegisterDto);
     }
 
 }

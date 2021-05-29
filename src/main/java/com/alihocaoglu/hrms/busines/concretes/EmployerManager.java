@@ -4,6 +4,7 @@ import com.alihocaoglu.hrms.busines.abstracts.*;
 import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerDao;
 import com.alihocaoglu.hrms.entities.concretes.Employer;
+import com.alihocaoglu.hrms.entities.dtos.EmployerForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,13 +41,30 @@ public class EmployerManager implements EmployerService {
     }
 
     @Override
-    public Result add(Employer employer) {
+    public Result add(EmployerForRegisterDto employerDto) {
+        if(!employerDto.getPassword().equals(employerDto.getRePassword())){
+            return new ErrorResult("Şifreler eşleşmiyor");
+        }
+        Employer employer=new Employer();
+        employer.setEmail(employerDto.getEmail());
+        employer.setPassword(employerDto.getPassword());
+        employer.setCompanyName(employerDto.getCompanyName());
+        employer.setWebSite(employerDto.getWebSite());
+        employer.setPhoneNumber(employerDto.getPhoneNumber());
+
+
        if(userService.getByEmail(employer.getEmail()).getData() != null){
             return new ErrorResult("Bu email zaten kayıtlı");
        }else if(!isEmailValid(employer.getEmail())){
            return new ErrorResult("Geçerli bir email giriniz");
        }else if(!employer.getEmail().endsWith(employer.getWebSite())){
            return new ErrorResult("Web siteniz ve emailinizin domaini aynı olmalıdır");
+       }else if(employer.getPassword().length() <=6 ){
+           return new ErrorResult("Şifre 6 karakterden uzun olmalıdır.");
+       }else if(employer.getPhoneNumber().length() <10){
+           return new ErrorResult("Geçerli bir telefon numarası giriniz.");
+       }else if(employer.getCompanyName().length()<=2){
+           return new ErrorResult("Şirket adı 2 karakterden uzun olmalıdır");
        }
 
        employer.setActive(false);

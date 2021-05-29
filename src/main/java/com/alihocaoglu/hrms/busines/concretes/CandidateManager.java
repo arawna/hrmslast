@@ -4,6 +4,7 @@ import com.alihocaoglu.hrms.busines.abstracts.*;
 import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.CandidateDao;
 import com.alihocaoglu.hrms.entities.concretes.Candidate;
+import com.alihocaoglu.hrms.entities.dtos.CandidateForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +45,18 @@ public class CandidateManager implements CandidateService {
     }
 
     @Override
-    public Result add(Candidate candidate) {
+    public Result add(CandidateForRegisterDto candidateDto) {
+        if(!candidateDto.getPassword().equals(candidateDto.getRePassword())){
+            return new ErrorResult("Şifreler eşleşmiyor");
+        }
+        Candidate candidate=new Candidate();
+        candidate.setFirstName(candidateDto.getFirstName());
+        candidate.setLastName(candidateDto.getLastName());
+        candidate.setNationalNumber(candidateDto.getNationalNumber());
+        candidate.setDateOfBirth(candidateDto.getBirthDate());
+        candidate.setEmail(candidateDto.getEmail());
+        candidate.setPassword(candidateDto.getPassword());
+
         if(candidate.getPassword().length() <=6){
             return new ErrorResult("Şifre 6 karakterden uzun olmalıdır");
         }else if(!isEmailValid(candidate.getEmail())){
@@ -61,6 +73,7 @@ public class CandidateManager implements CandidateService {
         }else{
             return new ErrorResult("Kullanıcı bilgileri hatalı");
         }
+
 
     }
 

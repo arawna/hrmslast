@@ -5,5 +5,5 @@ import com.alihocaoglu.hrms.entities.concretes.Employer;
 
 public interface ActivationByStaffService {
     void createActivationByStaff(Employer employer);
-    Result activateEmployer(int activationByStaffId);
+    Result activateEmployer(int employerId,int staffId);
 }
