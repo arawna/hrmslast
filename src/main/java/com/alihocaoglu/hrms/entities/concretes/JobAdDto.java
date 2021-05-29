@@ -1,0 +1,34 @@
+package com.alihocaoglu.hrms.entities.concretes;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class JobAdDto {
+    private int id;
+
+    private int jobPositionId;
+
+    private int employerId;
+
+    private String description;
+
+    private int cityId;
+
+    private int minSalary;
+
+    private int maxSalary;
+
+    private int openPositions;
+
+    private LocalDate lastDate;
+
+    private boolean active;
+
+    private LocalDate createDate;
+}
