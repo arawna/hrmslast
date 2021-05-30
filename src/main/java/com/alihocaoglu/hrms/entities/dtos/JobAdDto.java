@@ -30,5 +30,4 @@ public class JobAdDto {
 
     private boolean active;
 
-    private LocalDate createDate;
 }

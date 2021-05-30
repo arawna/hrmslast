@@ -1,10 +1,7 @@
 package com.alihocaoglu.hrms.busines.concretes;
 
 import com.alihocaoglu.hrms.busines.abstracts.JobAdService;
-import com.alihocaoglu.hrms.core.utilities.results.DataResult;
-import com.alihocaoglu.hrms.core.utilities.results.Result;
-import com.alihocaoglu.hrms.core.utilities.results.SuccessDataResult;
-import com.alihocaoglu.hrms.core.utilities.results.SuccessResult;
+import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.CityDao;
 import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerDao;
 import com.alihocaoglu.hrms.dataAccess.abstracts.JobAdDao;
@@ -35,6 +32,31 @@ public class JobAdManager implements JobAdService {
 
     @Override
     public Result create(JobAdDto jobAdDto) {
+
+        if(!cityDao.existsById(jobAdDto.getCityId())){
+            return new ErrorResult("Şehir bulunamadı");
+        }
+        else if(!this.employerDao.existsById(jobAdDto.getEmployerId())){
+            return new ErrorResult("İş veren bulunamadı");
+        }
+        else if(jobAdDto.getDescription().isEmpty()){
+            return new ErrorResult("Açıklama boş birakılamaz");
+        }
+        else if(jobAdDto.getMinSalary()==0){
+            return new ErrorResult("Minumum maaş 0 verilemez");
+        }
+        else if(jobAdDto.getMaxSalary()==0){
+            return new ErrorResult("Maximum maaş sıfır verilemez");
+        }
+        else if(jobAdDto.getMinSalary() >= jobAdDto.getMaxSalary()){
+            return new ErrorResult("Minumum maaş maksimum maala eşit yada büyük olamaz");
+        }
+        else if(jobAdDto.getOpenPositions()<1){
+            return new ErrorResult("Açık pozisyon adeti 1 den küçük olamaz");
+        }
+        else if(jobAdDto.getLastDate() == null){
+            return new ErrorResult("Son başvuru tarihi boş bırakılamaz");
+        }
 
         JobAd jobAd=new JobAd();
         jobAd.setId(0);
