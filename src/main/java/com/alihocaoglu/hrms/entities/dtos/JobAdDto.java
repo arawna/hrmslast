@@ -10,7 +10,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobAdDto {
-    private int id;
 
     private int jobPositionId;
 
