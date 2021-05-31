@@ -1,6 +1,7 @@
 package com.alihocaoglu.hrms.busines.concretes;
 
 import com.alihocaoglu.hrms.busines.abstracts.ActivationByStaffService;
+import com.alihocaoglu.hrms.core.utilities.results.ErrorResult;
 import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.core.utilities.results.SuccessResult;
 import com.alihocaoglu.hrms.dataAccess.abstracts.ActivationByStaffDao;
@@ -10,6 +11,7 @@ import com.alihocaoglu.hrms.entities.concretes.Employer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 
 @Service
@@ -35,18 +37,21 @@ public class ActivationByStaffManager implements ActivationByStaffService {
     @Override
     public Result activateEmployer(int employerId,int staffId) {
 
-        Employer employer = employerDao.getById(employerId);
-        employer.setActive(true);
-        employerDao.save(employer);
+        try {
+            Employer employer = employerDao.getById(employerId);
+            ActivationByStaff activationByStaff = activationByStaffDao.findByEmployeId(employerId);
 
+            employer.setActive(true);
+            employerDao.save(employer);
 
+            activationByStaff.setVerifyed(true);
+            activationByStaff.setVerifyDate(LocalDate.now());
+            activationByStaff.setStaffId(staffId);
+            activationByStaffDao.save(activationByStaff);
 
-        ActivationByStaff activationByStaff = activationByStaffDao.findByEmployeId(employerId);
-        activationByStaff.setVerifyed(true);
-        activationByStaff.setVerifyDate(LocalDate.now());
-        activationByStaff.setStaffId(staffId);
-        activationByStaffDao.save(activationByStaff);
-
+        }catch (EntityNotFoundException exception){
+            return new ErrorResult("Hatalı id");
+        }
         return new SuccessResult("Kullanıcı aktif edildi");
     }
 }

@@ -71,7 +71,7 @@ public class CandidateManager implements CandidateService {
             this.emailService.sendVerifyEmail(candidate,this.activationCodeService.createActivationCode(candidate));
             return new SuccessResult(candidate.getEmail()+" Adresine doğrulama kodu gönderildi");
         }else{
-            return new ErrorResult("Kullanıcı bilgileri hatalı");
+            return new ErrorResult("Kullanıcı kimlik bilgileri hatalı");
         }
 
 

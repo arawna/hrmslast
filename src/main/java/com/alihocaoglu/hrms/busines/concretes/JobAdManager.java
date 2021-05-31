@@ -11,6 +11,7 @@ import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -78,18 +79,28 @@ public class JobAdManager implements JobAdService {
 
     @Override
     public Result setPasssive(int jobAdId) {
-        JobAd jobAd=this.jobAdDao.getById(jobAdId);
-        jobAd.setActive(false);
-        jobAdDao.save(jobAd);
-        return new SuccessResult("İş ilanı pasifleştirildi");
+        try {
+            JobAd jobAd=this.jobAdDao.getById(jobAdId);
+            jobAd.setActive(false);
+            jobAdDao.save(jobAd);
+            return new SuccessResult("İş ilanı pasifleştirildi");
+        }catch (EntityNotFoundException exception){
+            return new ErrorResult("İş ilanı bulunamadı");
+        }
+
     }
 
     @Override
     public Result setActive(int jobAdId) {
-        JobAd jobAd=this.jobAdDao.getById(jobAdId);
-        jobAd.setActive(true);
-        this.jobAdDao.save(jobAd);
-        return new SuccessResult("İş ilanı aktifleştirildi");
+        try{
+            JobAd jobAd=this.jobAdDao.getById(jobAdId);
+            jobAd.setActive(true);
+            this.jobAdDao.save(jobAd);
+            return new SuccessResult("İş ilanı aktifleştirildi");
+        }catch (EntityNotFoundException exception){
+            return new ErrorResult("İş ilanı bulunamadı");
+        }
+
     }
 
     @Override

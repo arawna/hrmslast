@@ -28,6 +28,8 @@ public class JobPositionManager implements JobPositionService {
     public Result add(JobPosition jobPosition) {
         if(getByName(jobPosition.getName()).getData() != null){
             return new ErrorResult("Bu isimde bir pozisyon zaten kayıtlı");
+        }else if(jobPosition.getName().length() <=2){
+            return new ErrorResult("İş ismi 2 karakterden kısa olamaz");
         }else{
             this.jobPositionDao.save(jobPosition);
             return new SuccessResult("İş eklendi");
