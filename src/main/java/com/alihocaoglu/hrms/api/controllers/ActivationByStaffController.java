@@ -4,6 +4,7 @@ package com.alihocaoglu.hrms.api.controllers;
 import com.alihocaoglu.hrms.busines.abstracts.ActivationByStaffService;
 import com.alihocaoglu.hrms.core.utilities.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +19,11 @@ public class ActivationByStaffController {
     }
 
     @GetMapping("/activateemployer")
-    public Result activateEmployer(@RequestParam int employerId,@RequestParam int staffId){
-        return activationByStaffService.activateEmployer(employerId,staffId);
+    public ResponseEntity<?> activateEmployer(@RequestParam int employerId,@RequestParam int staffId){
+        Result result=this.activationByStaffService.activateEmployer(employerId, staffId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }

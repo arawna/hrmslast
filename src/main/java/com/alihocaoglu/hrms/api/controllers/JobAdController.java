@@ -6,6 +6,7 @@ import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.entities.concretes.JobAd;
 import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,18 +28,30 @@ public class JobAdController {
     }
 
     @PostMapping("/create")
-    public Result create(@RequestBody JobAdDto jobAdDto){
-        return this.jobAdService.create(jobAdDto);
+    public ResponseEntity<?> create(@RequestBody JobAdDto jobAdDto){
+        Result result=this.jobAdService.create(jobAdDto);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/setPassive")
-    public Result setPasssive(@RequestParam int jobAdId){
-        return this.jobAdService.setPasssive(jobAdId);
+    public ResponseEntity<?> setPasssive(@RequestParam int jobAdId){
+        Result result=this.jobAdService.setPasssive(jobAdId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/setActive")
-    public Result setActive(@RequestParam int jobAdId){
-        return this.jobAdService.setActive(jobAdId);
+    public ResponseEntity<?> setActive(@RequestParam int jobAdId){
+        Result result=this.jobAdService.setActive(jobAdId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 
     @GetMapping("/getActiveAds")

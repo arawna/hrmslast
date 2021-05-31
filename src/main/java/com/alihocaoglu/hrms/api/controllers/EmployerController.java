@@ -6,6 +6,7 @@ import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.entities.concretes.Employer;
 import com.alihocaoglu.hrms.entities.dtos.EmployerForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,7 +28,11 @@ public class EmployerController {
     }
 
     @PostMapping("/add")
-    public Result add(@RequestBody EmployerForRegisterDto employerForRegisterDto){
-        return this.employerService.add(employerForRegisterDto);
+    public ResponseEntity<?> add(@RequestBody EmployerForRegisterDto employerForRegisterDto){
+        Result result=this.employerService.add(employerForRegisterDto);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
     }
 }
