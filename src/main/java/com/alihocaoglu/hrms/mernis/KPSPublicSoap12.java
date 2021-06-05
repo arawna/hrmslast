@@ -13,22 +13,18 @@ package com.alihocaoglu.hrms.mernis;
 
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.serialization.*;
-import org.ksoap2.transport.*;
-import org.kxml2.kdom.Element;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
-public class RENKPSPublicSoap
+public class KPSPublicSoap12
 {
     interface RENIWcfMethod
     {
-        RENExtendedSoapSerializationEnvelope CreateSoapEnvelope() throws java.lang.Exception;
+        ExtendedSoapSerializationEnvelope CreateSoapEnvelope() throws java.lang.Exception;
 
-        java.lang.Object ProcessResult(RENExtendedSoapSerializationEnvelope __envelope,java.lang.Object result) throws java.lang.Exception;
+        java.lang.Object ProcessResult(ExtendedSoapSerializationEnvelope __envelope, java.lang.Object result) throws java.lang.Exception;
     }
 
     String url="https://tckimlik.nvi.gov.tr/Service/KPSPublic.asmx";
@@ -39,14 +35,14 @@ public class RENKPSPublicSoap
     public boolean enableLogging;
 
 
-    public RENKPSPublicSoap(){}
+    public KPSPublicSoap12(){}
 
-    public RENKPSPublicSoap(String url)
+    public KPSPublicSoap12(String url)
     {
         this.url = url;
     }
 
-    public RENKPSPublicSoap(String url,int timeOut)
+    public KPSPublicSoap12(String url, int timeOut)
     {
         this.url = url;
         this.timeOut=timeOut;
@@ -79,15 +75,15 @@ public class RENKPSPublicSoap
         return null;
     }
 
-    protected RENExtendedSoapSerializationEnvelope createEnvelope()
+    protected ExtendedSoapSerializationEnvelope createEnvelope()
     {
-        RENExtendedSoapSerializationEnvelope envelope= new RENExtendedSoapSerializationEnvelope(RENExtendedSoapSerializationEnvelope.VER11);
+        ExtendedSoapSerializationEnvelope envelope= new ExtendedSoapSerializationEnvelope(ExtendedSoapSerializationEnvelope.VER12);
         envelope.enableLogging = enableLogging;
     
         return envelope;
     }
 
-    protected java.util.List sendRequest(String methodName,RENExtendedSoapSerializationEnvelope envelope,org.ksoap2.transport.Transport transport ,com.easywsdl.exksoap2.ws_specifications.profile.WS_Profile profile )throws java.lang.Exception
+    protected java.util.List sendRequest(String methodName, ExtendedSoapSerializationEnvelope envelope, org.ksoap2.transport.Transport transport , com.easywsdl.exksoap2.ws_specifications.profile.WS_Profile profile )throws java.lang.Exception
     {
         if(transport instanceof com.easywsdl.exksoap2.transport.AdvancedHttpTransportSE )
         {
@@ -99,7 +95,7 @@ public class RENKPSPublicSoap
         }
     }
 
-    java.lang.Object getResult(java.lang.Class destObj,java.lang.Object source,String resultName,RENExtendedSoapSerializationEnvelope __envelope) throws java.lang.Exception
+    java.lang.Object getResult(java.lang.Class destObj, java.lang.Object source, String resultName, ExtendedSoapSerializationEnvelope __envelope) throws java.lang.Exception
     {
         if(source==null)
         {
@@ -146,8 +142,8 @@ public class RENKPSPublicSoap
         return (Boolean)execute(new RENIWcfMethod()
         {
             @Override
-            public RENExtendedSoapSerializationEnvelope CreateSoapEnvelope(){
-                RENExtendedSoapSerializationEnvelope __envelope = createEnvelope();
+            public ExtendedSoapSerializationEnvelope CreateSoapEnvelope(){
+                ExtendedSoapSerializationEnvelope __envelope = createEnvelope();
                 SoapObject __soapReq = new SoapObject("http://tckimlik.nvi.gov.tr/WS", "TCKimlikNoDogrula");
                 __envelope.setOutputSoapObject(__soapReq);
                 
@@ -180,7 +176,7 @@ public class RENKPSPublicSoap
             }
             
             @Override
-            public java.lang.Object ProcessResult(RENExtendedSoapSerializationEnvelope __envelope,java.lang.Object __result)throws java.lang.Exception {
+            public java.lang.Object ProcessResult(ExtendedSoapSerializationEnvelope __envelope, java.lang.Object __result)throws java.lang.Exception {
                 SoapObject __soap=(SoapObject)__result;
                 java.lang.Object obj = __soap.getProperty("TCKimlikNoDogrulaResult");
                 if (obj instanceof SoapPrimitive)
@@ -200,7 +196,7 @@ public class RENKPSPublicSoap
     {
         org.ksoap2.transport.Transport __httpTransport=createTransport();
         __httpTransport.debug=enableLogging;
-        RENExtendedSoapSerializationEnvelope __envelope=wcfMethod.CreateSoapEnvelope();
+        ExtendedSoapSerializationEnvelope __envelope=wcfMethod.CreateSoapEnvelope();
         try
         {
             sendRequest(methodName, __envelope, __httpTransport,profile);
@@ -226,7 +222,7 @@ public class RENKPSPublicSoap
     }
 
 
-    protected java.lang.Exception convertToException(org.ksoap2.SoapFault fault,RENExtendedSoapSerializationEnvelope envelope)
+    protected java.lang.Exception convertToException(org.ksoap2.SoapFault fault, ExtendedSoapSerializationEnvelope envelope)
     {
         org.ksoap2.SoapFault newException = fault;
         return newException;

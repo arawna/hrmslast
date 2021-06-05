@@ -29,13 +29,13 @@
     <DetectDictionaries>false</DetectDictionaries>
   </Settings>
   <Files>
-    <File>RENDateTimeConverter.java</File>
-    <File>RENExtendedSoapSerializationEnvelope.java</File>
-    <File>RENHelper.java</File>
-    <File>RENKPSPublicSoap.java</File>
-    <File>RENKPSPublicSoap12.java</File>
-    <File>RENMarshalGuid.java</File>
-    <File>RENStandardDateTimeConverter.java</File>
+    <File>DateTimeConverter.java</File>
+    <File>ExtendedSoapSerializationEnvelope.java</File>
+    <File>Helper.java</File>
+    <File>KPSPublicSoap.java</File>
+    <File>KPSPublicSoap12.java</File>
+    <File>MarshalGuid.java</File>
+    <File>StandardDateTimeConverter.java</File>
   </Files>
   <Libraries>
     <File>ExKsoap2-1.0.3.1.jar</File>

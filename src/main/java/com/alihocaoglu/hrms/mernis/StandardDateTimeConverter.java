@@ -15,7 +15,7 @@ import java.util.Locale;
 
 
 
-public class RENStandardDateTimeConverter implements RENDateTimeConverter
+public class StandardDateTimeConverter implements DateTimeConverter
 {
     public java.util.TimeZone TimeZone=java.util.TimeZone.getTimeZone("UTC");
 
