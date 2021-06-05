@@ -31,6 +31,7 @@ public class ActivationByStaffManager implements ActivationByStaffService {
         ActivationByStaff activationByStaff=new ActivationByStaff();
         activationByStaff.setEmployeId(employer.getId());
         activationByStaff.setVerifyed(false);
+        activationByStaff.setStaffId(null);
         activationByStaffDao.save(activationByStaff);
     }
 

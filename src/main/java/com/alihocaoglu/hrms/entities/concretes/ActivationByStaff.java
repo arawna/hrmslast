@@ -24,7 +24,7 @@ public class ActivationByStaff {
     private int employeId;
 
     @Column(name = "staff_id")
-    private int staffId;
+    private Integer staffId;
 
     @Column(name = "verifyed")
     private boolean verifyed;
