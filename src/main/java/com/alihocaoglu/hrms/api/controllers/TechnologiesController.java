@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/technology")
+@CrossOrigin
 public class TechnologiesController {
 
     private TechnologyService technologyService;

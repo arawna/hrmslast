@@ -109,6 +109,15 @@ public class JobAdManager implements JobAdService {
     }
 
     @Override
+    public DataResult<JobAd> getByJobAdId(int id) {
+        if(!this.jobAdDao.existsById(id)){
+            return new ErrorDataResult<JobAd>("Böyle bir ilan yok");
+        }
+        return new SuccessDataResult<JobAd>(this.jobAdDao.getById(id),"Data listelendi");
+    }
+
+
+    @Override
     public DataResult<List<JobAd>> getActiveAds() {
         return new SuccessDataResult<List<JobAd>>(this.jobAdDao.findByActive(true),"Aktif iş ilanları listelendi");
     }

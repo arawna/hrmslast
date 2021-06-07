@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/school")
+@CrossOrigin
 public class SchoolsContoller {
 
     private SchoolService schoolService;

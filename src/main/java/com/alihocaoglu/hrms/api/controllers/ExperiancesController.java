@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/experiances")
+@CrossOrigin
 public class ExperiancesController {
 
     private ExperianceService experianceService;

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/acticationbystaff")
+@CrossOrigin
 public class ActivationByStaffController {
 
     private ActivationByStaffService activationByStaffService;

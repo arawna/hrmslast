@@ -75,6 +75,8 @@
             <artifactId>cloudinary-http44</artifactId>
             <version>1.24.0</version>
         </dependency>
+
+
     </dependencies>
 
     <build>

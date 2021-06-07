@@ -12,6 +12,7 @@ public interface JobAdService {
     Result setPasssive(int jobAdId);
     Result setActive(int jobAdId);
     DataResult<List<JobAd>> getAll();
+    DataResult<JobAd> getByJobAdId(int id);
     DataResult<List<JobAd>> getActiveAds();
     DataResult<List<JobAd>> getActiveAndOrderLastDate();
     DataResult<List<JobAd>> getActiveAndCompanyId(int id);
