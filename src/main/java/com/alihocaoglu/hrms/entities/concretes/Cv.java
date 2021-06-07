@@ -19,9 +19,10 @@ public class Cv {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-    
-    @Column(name = "candidate_id")
-    private int candidateId;
+
+    @ManyToOne()
+    @JoinColumn(name = "candidate_id")
+    private Candidate candidate;
 
     @Column(name = "github")
     private String github;
