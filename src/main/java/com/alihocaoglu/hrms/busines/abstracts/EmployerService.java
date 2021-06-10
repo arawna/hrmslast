@@ -11,4 +11,5 @@ public interface EmployerService {
     DataResult<List<Employer>> getAll();
     DataResult<Employer> getByEmail(String email);
     Result add(EmployerForRegisterDto employerDto);
+    DataResult<Employer> getById(int id);
 }

@@ -36,4 +36,9 @@ public class EmployerController {
         }
         return ResponseEntity.badRequest().body(result);
     }
+
+    @GetMapping("/getById")
+    DataResult<Employer> getById(@RequestParam int id){
+        return this.employerService.getById(id);
+    }
 }

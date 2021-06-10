@@ -80,6 +80,14 @@ public class EmployerManager implements EmployerService {
 
     }
 
+    @Override
+    public DataResult<Employer> getById(int id) {
+        if(!this.employerDao.existsById(id)){
+            return new ErrorDataResult<Employer>("Böyle bir işveren yok");
+        }
+        return new SuccessDataResult<Employer>(this.employerDao.getById(id),"Data listelendi");
+    }
+
 
     private final String EMAIL_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+.(com|org|net|edu|gov|mil|biz|info|mobi)(.[A-Z]{2})?$";
 
