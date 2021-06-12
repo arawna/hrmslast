@@ -8,7 +8,7 @@ import com.alihocaoglu.hrms.entities.dtos.CvForSetDto;
 import java.util.List;
 
 public interface CvService {
-    //public Result add(CvForSetDto cvForSetDto);
+    public Result add(int candidateId);
     public DataResult<List<Cv>> getAll();
 
     public DataResult<Cv> getByCvId(int cvId);

@@ -23,21 +23,14 @@ public class CvManager implements CvService {
         this.candidateDao=candidateDao;
     }
 
-    //@Override
-    /*public Result add(CvForSetDto cvForSetDto) {
+    @Override
+    public Result add(int candidateId) {
         Cv cv=new Cv();
-        cv.setCandidateId(cvForSetDto.getCandidateId());
-        cv.setGithub(cvForSetDto.getGithub());
-        cv.setLinkedin(cvForSetDto.getLinkedin());
-        cv.setBiography(cvForSetDto.getBiography());
-
-        if(!this.candidateDao.existsById(cv.getCandidateId())){
-            return new ErrorResult("Böyle bir candidate yok");
-        }
+        cv.setCandidate(this.candidateDao.getById(candidateId));
 
         this.cvDao.save(cv);
         return new SuccessResult("Kaydedildi");
-    }*/
+    }
 
 
 

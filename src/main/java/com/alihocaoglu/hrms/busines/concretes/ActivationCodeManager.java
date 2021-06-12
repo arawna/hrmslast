@@ -1,10 +1,12 @@
 package com.alihocaoglu.hrms.busines.concretes;
 
 import com.alihocaoglu.hrms.busines.abstracts.ActivationCodeService;
+import com.alihocaoglu.hrms.busines.abstracts.CvService;
 import com.alihocaoglu.hrms.core.utilities.results.ErrorResult;
 import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.core.utilities.results.SuccessResult;
 import com.alihocaoglu.hrms.dataAccess.abstracts.ActivationCodeDao;
+import com.alihocaoglu.hrms.dataAccess.abstracts.CandidateDao;
 import com.alihocaoglu.hrms.dataAccess.abstracts.UserDao;
 import com.alihocaoglu.hrms.entities.concretes.ActivationCode;
 import com.alihocaoglu.hrms.entities.concretes.User;
@@ -23,11 +25,15 @@ public class ActivationCodeManager implements ActivationCodeService {
 
     private ActivationCodeDao activationCodeDao;
     private UserDao userDao;
+    private CandidateDao candidateDao;
+    private CvService cvService;
 
     @Autowired
-    public ActivationCodeManager(ActivationCodeDao activationCodeDao,UserDao userDao) {
+    public ActivationCodeManager(ActivationCodeDao activationCodeDao,UserDao userDao,CandidateDao candidateDao,CvService cvService) {
         this.activationCodeDao = activationCodeDao;
         this.userDao=userDao;
+        this.candidateDao=candidateDao;
+        this.cvService=cvService;
     }
 
     @Override
@@ -71,6 +77,10 @@ public class ActivationCodeManager implements ActivationCodeService {
         activationCode.setVerifayed(true);
         activationCode.setVerifyDate(LocalDate.now());
         activationCodeDao.save(activationCode);
+
+        if(candidateDao.existsById(user.getId())){
+            this.cvService.add(user.getId());
+        }
 
         return new SuccessResult("Kullanıcı aktif edildi");
     }
