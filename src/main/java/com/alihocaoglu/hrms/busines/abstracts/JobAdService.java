@@ -10,7 +10,7 @@ import java.util.List;
 public interface JobAdService {
     Result create(JobAdDto jobAdDto);
     Result setPasssive(int jobAdId);
-    Result setActive(int jobAdId);
+    Result setActiveAndConfirm(int jobAdId,int staffId);
     DataResult<List<JobAd>> getAll();
     DataResult<JobAd> getByJobAdId(int id);
     DataResult<List<JobAd>> getActiveAds();

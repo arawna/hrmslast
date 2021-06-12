@@ -2,11 +2,9 @@ package com.alihocaoglu.hrms.busines.concretes;
 
 import com.alihocaoglu.hrms.busines.abstracts.JobAdService;
 import com.alihocaoglu.hrms.core.utilities.results.*;
-import com.alihocaoglu.hrms.dataAccess.abstracts.CityDao;
-import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerDao;
-import com.alihocaoglu.hrms.dataAccess.abstracts.JobAdDao;
-import com.alihocaoglu.hrms.dataAccess.abstracts.JobPositionDao;
+import com.alihocaoglu.hrms.dataAccess.abstracts.*;
 import com.alihocaoglu.hrms.entities.concretes.JobAd;
+import com.alihocaoglu.hrms.entities.concretes.JobAdActivation;
 import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +20,21 @@ public class JobAdManager implements JobAdService {
     private JobPositionDao jobPositionDao;
     private EmployerDao employerDao;
     private CityDao cityDao;
+    private WorkPlaceDao workPlaceDao;
+    private WorkTimeDao workTimeDao;
+    private JobAdActivationDao jobAdActivationDao;
+    private StaffDao staffDao;
 
     @Autowired
-    public JobAdManager(JobAdDao jobAdDao,JobPositionDao jobPositionDao,EmployerDao employerDao,CityDao cityDao) {
+    public JobAdManager(JobAdDao jobAdDao,JobPositionDao jobPositionDao,EmployerDao employerDao,CityDao cityDao,WorkPlaceDao workPlaceDao,WorkTimeDao workTimeDao,JobAdActivationDao jobAdActivationDao,StaffDao staffDao) {
         this.jobAdDao = jobAdDao;
         this.jobPositionDao=jobPositionDao;
         this.employerDao=employerDao;
         this.cityDao=cityDao;
+        this.workPlaceDao=workPlaceDao;
+        this.workTimeDao=workTimeDao;
+        this.jobAdActivationDao=jobAdActivationDao;
+        this.staffDao=staffDao;
     }
 
     @Override
@@ -57,6 +63,10 @@ public class JobAdManager implements JobAdService {
         }
         else if(jobAdDto.getLastDate() == null){
             return new ErrorResult("Son başvuru tarihi boş bırakılamaz");
+        }else if(!this.workPlaceDao.existsById(jobAdDto.getWorkPlaceId())){
+            return new ErrorResult("Geçersiz Çalışma yeri");
+        }else if(!this.workTimeDao.existsById(jobAdDto.getWorkTimeId())){
+            return new ErrorResult("Geçersiz çalışma zamanı");
         }
 
         JobAd jobAd=new JobAd();
@@ -69,11 +79,19 @@ public class JobAdManager implements JobAdService {
         jobAd.setMaxSalary(jobAdDto.getMaxSalary());
         jobAd.setOpenPositions(jobAdDto.getOpenPositions());
         jobAd.setLastDate(jobAdDto.getLastDate());
-        jobAd.setActive(true);
+        jobAd.setActive(false);
         jobAd.setCreateDate(LocalDate.now());
-
-
+        jobAd.setWorkPlace(this.workPlaceDao.getById(jobAdDto.getWorkPlaceId()));
+        jobAd.setWorkTime(this.workTimeDao.getById(jobAdDto.getWorkTimeId()));
+        jobAd.setConfirmed(false);
         this.jobAdDao.save(jobAd);
+
+        JobAdActivation jobAdActivation=new JobAdActivation();
+        jobAdActivation.setJobAdId(jobAd.getId());
+        jobAdActivation.setConfirm(false);
+        this.jobAdActivationDao.save(jobAdActivation);
+
+
         return new SuccessResult("İlan başarılı bir şekilde eklendi");
     }
 
@@ -91,10 +109,21 @@ public class JobAdManager implements JobAdService {
     }
 
     @Override
-    public Result setActive(int jobAdId) {
+    public Result setActiveAndConfirm(int jobAdId,int staffId) {
         try{
+            if(!this.staffDao.existsById(staffId)){
+                return new ErrorResult("Böyle bir personel yok");
+            }
+            JobAdActivation jobAdActivation=this.jobAdActivationDao.getById(jobAdId);
+            jobAdActivation.setConfirmDate(LocalDate.now());
+            jobAdActivation.setConfirm(true);
+            jobAdActivation.setStaffId(staffId);
+            this.jobAdActivationDao.save(jobAdActivation);
+
+
             JobAd jobAd=this.jobAdDao.getById(jobAdId);
             jobAd.setActive(true);
+            jobAd.setConfirmed(true);
             this.jobAdDao.save(jobAd);
             return new SuccessResult("İş ilanı aktifleştirildi");
         }catch (EntityNotFoundException exception){

@@ -51,4 +51,14 @@ public class JobAd {
 
     @Column(name = "create_date")
     private LocalDate createDate;
+
+    @ManyToOne()
+    @JoinColumn(name = "workplace_id")
+    private WorkPlace workPlace;
+
+    @ManyToOne()
+    @JoinColumn(name = "work_time_id")
+    private WorkTime workTime;
+
+    private boolean confirmed;
 }

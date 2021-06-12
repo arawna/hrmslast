@@ -29,4 +29,8 @@ public class JobAdDto {
 
     private boolean active;
 
+    private int workPlaceId;
+
+    private int workTimeId;
+
 }

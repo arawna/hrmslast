@@ -75,12 +75,12 @@ public class JobAdController {
     }
 
     @PostMapping("/setActive")
-    public ResponseEntity<?> setActive(@RequestParam int jobAdId){
-        Result result=this.jobAdService.setActive(jobAdId);
-        if(result.isSuccess()){
-            return ResponseEntity.ok(result);
+    public ResponseEntity<?> setActiveAndConfirm(@RequestParam int jobAdId,@RequestParam int staffId){
+        Result result=this.jobAdService.setActiveAndConfirm(jobAdId,staffId);
+        if(!result.isSuccess()){
+            ResponseEntity.badRequest().body(result);
         }
-        return ResponseEntity.badRequest().body(result);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/getActiveAds")
