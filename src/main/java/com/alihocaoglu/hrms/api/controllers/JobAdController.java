@@ -52,6 +52,9 @@ public class JobAdController {
         jobAd.setLastDate(jobAdForSet.getLastDate());
         jobAd.setActive(jobAdForSet.isActive());
         jobAd.setCreateDate(jobAdForSet.getCreateDate());
+        jobAd.setWorkPlace(jobAdForSet.getWorkPlace());
+        jobAd.setWorkTime(jobAdForSet.getWorkTime());
+        jobAd.setConfirmed(jobAdForSet.isConfirmed());
 
         return new SuccessDataResult<JobAd>(jobAd,"Data listelendi");
     }
