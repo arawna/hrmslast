@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface ImageDao extends JpaRepository<Image,Integer> {
     List<Image> findByOrderById();
+    Image findByCvId(int id);
 }

@@ -4,7 +4,9 @@ import com.alihocaoglu.hrms.busines.abstracts.CvService;
 import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.CandidateDao;
 import com.alihocaoglu.hrms.dataAccess.abstracts.CvDao;
+import com.alihocaoglu.hrms.dataAccess.abstracts.ImageDao;
 import com.alihocaoglu.hrms.entities.concretes.Cv;
+import com.alihocaoglu.hrms.entities.concretes.Image;
 import com.alihocaoglu.hrms.entities.dtos.CvForSetDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,11 +18,13 @@ public class CvManager implements CvService {
 
     private CvDao cvDao;
     private CandidateDao candidateDao;
+    private ImageDao imageDao;
 
     @Autowired
-    public CvManager(CvDao cvDao,CandidateDao candidateDao) {
+    public CvManager(CvDao cvDao,CandidateDao candidateDao,ImageDao imageDao) {
         this.cvDao = cvDao;
         this.candidateDao=candidateDao;
+        this.imageDao=imageDao;
     }
 
     @Override
@@ -29,6 +33,10 @@ public class CvManager implements CvService {
         cv.setCandidate(this.candidateDao.getById(candidateId));
 
         this.cvDao.save(cv);
+        Image image=new Image();
+        image.setCv(cv);
+        image.setImageUrl("https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg");
+        this.imageDao.save(image);
         return new SuccessResult("Kaydedildi");
     }
 

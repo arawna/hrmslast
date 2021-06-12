@@ -4,6 +4,7 @@ import com.alihocaoglu.hrms.busines.abstracts.CvService;
 import com.alihocaoglu.hrms.busines.abstracts.ImageService;
 import com.alihocaoglu.hrms.core.services.CloudinaryService;
 import com.alihocaoglu.hrms.core.utilities.results.ErrorResult;
+import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.core.utilities.results.SuccessResult;
 import com.alihocaoglu.hrms.dataAccess.abstracts.CvDao;
 import com.alihocaoglu.hrms.entities.concretes.Image;
@@ -40,44 +41,19 @@ public class ImagesController {
 
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile ,@RequestParam int cvId){
-        try {
-            BufferedImage bufferedImage= ImageIO.read(multipartFile.getInputStream());
-            if(bufferedImage==null){
-                return ResponseEntity.badRequest().body(new ErrorResult("Resim validasyonu başarısız"));
-            }
-        }catch (IOException exception){
-            return ResponseEntity.badRequest().body(new ErrorResult("Resim validasyonu başarısız"));
+        Result result=this.imageService.update(multipartFile,cvId);
+        if(!result.isSuccess()){
+            return ResponseEntity.badRequest().body(result);
         }
-
-        try {
-            Map result= cloudinaryService.upload(multipartFile);
-            Image image=new Image();
-            image.setName((String)result.get("original_filename"));
-            image.setImageUrl((String)result.get("url"));
-            image.setImageId((String)result.get("public_id"));
-            image.setCv(this.cvDao.getById(cvId));
-            return ResponseEntity.ok(this.imageService.add(image));
-        }catch (IOException exception){
-            return ResponseEntity.badRequest().body(new ErrorResult("Resim yukleme aşamasında bir sorun oluştu"));
-        }
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> delete(@RequestParam int id){
-        if(!this.imageService.isExist(id)){
-            return ResponseEntity.badRequest().body(new ErrorResult("Böyle bir resim bulunamadı"));
+        Result result=this.imageService.delete(id);
+        if(!result.isSuccess()){
+            return ResponseEntity.badRequest().body(result);
         }
-
-        try {
-            Image image=this.imageService.getById(id).getData();
-            Map result=cloudinaryService.delete(image.getImageId());
-            this.imageService.delete(id);
-            return ResponseEntity.ok(new SuccessResult("Resim başarıyla silindi"));
-        }catch (IOException exception){
-            return ResponseEntity.badRequest().body(new ErrorResult("Bir hata oluştu"));
-        }
-
-
-
+        return ResponseEntity.ok(result);
     }
 }
