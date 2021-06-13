@@ -46,7 +46,7 @@ public class JobAdController {
         jobAd.setJobPosition(jobAdForSet.getJobPosition());
         jobAd.setDescription(jobAdForSet.getDescription());
         jobAd.setCity(jobAdForSet.getCity());
-        jobAd.setMaxSalary(jobAdForSet.getMinSalary());
+        jobAd.setMinSalary(jobAdForSet.getMinSalary());
         jobAd.setMaxSalary(jobAdForSet.getMaxSalary());
         jobAd.setOpenPositions(jobAdForSet.getOpenPositions());
         jobAd.setLastDate(jobAdForSet.getLastDate());
