@@ -120,7 +120,6 @@ public class JobAdManager implements JobAdService {
             jobAdActivation.setStaffId(staffId);
             this.jobAdActivationDao.save(jobAdActivation);
 
-
             JobAd jobAd=this.jobAdDao.getById(jobAdId);
             jobAd.setActive(true);
             jobAd.setConfirmed(true);

@@ -22,7 +22,7 @@ public class JobAdActivation {
     private int jobAdId;
 
     @Column(name = "staff_id")
-    private int staffId;
+    private Integer staffId;
 
     @Column(name = "confirm")
     private boolean confirm;
