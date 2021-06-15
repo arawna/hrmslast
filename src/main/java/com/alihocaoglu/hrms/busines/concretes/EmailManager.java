@@ -17,7 +17,7 @@ public class EmailManager implements EmailService {
     public void sendVerifyEmail(User user, String code) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setSubject("HRMS Mail Dogrulama");
-        message.setText("Hrms kayıt işleminizi tamamlamak için linke tıklayınız: localhost:8080/api/activationcode/active/"+code);
+        message.setText("Hrms kayıt işleminizi tamamlamak için linke tıklayınız: https://kodlamaio-hrms.herokuapp.com/api/activationcode/active/"+code);
         message.setTo(user.getEmail());
         message.setFrom("deneme@gmail.com");
 
