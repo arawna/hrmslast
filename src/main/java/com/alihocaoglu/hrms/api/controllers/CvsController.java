@@ -51,7 +51,7 @@ public class CvsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/updateGithub")
+    @PutMapping("/updateGithub")
     public ResponseEntity<?> updateGithub(@RequestParam String githublink,@RequestParam int cvId){
         Result result=this.cvService.updateGithub(githublink,cvId);
         if(result.isSuccess()){
@@ -60,7 +60,7 @@ public class CvsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/deleteGithub")
+    @DeleteMapping("/deleteGithub")
     public ResponseEntity<?> deleteGithub(@RequestParam int cvId){
         Result result=this.cvService.deleteGithub(cvId);
         if (result.isSuccess()){
@@ -69,7 +69,7 @@ public class CvsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/updateLinkedin")
+    @PutMapping("/updateLinkedin")
     public ResponseEntity<?> updateLinkedin(@RequestParam String linkedinlink,@RequestParam int cvId){
         Result result=this.cvService.updateLinkedin(linkedinlink,cvId);
         if(result.isSuccess()){
@@ -78,7 +78,7 @@ public class CvsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/deleteLinkedin")
+    @DeleteMapping("/deleteLinkedin")
     public ResponseEntity<?> deleteLinkedin(@RequestParam int cvId){
         Result result=this.cvService.deleteLinkedin(cvId);
         if(result.isSuccess()){
@@ -87,7 +87,7 @@ public class CvsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/updateBiography")
+    @PutMapping("/updateBiography")
     public ResponseEntity<?> updateBiography(@RequestParam String biography,@RequestParam int cvId){
         Result result=this.cvService.updateBiography(biography,cvId);
         if(result.isSuccess()){
@@ -96,7 +96,7 @@ public class CvsController {
         return ResponseEntity.badRequest().body(result);
     }
 
-    @PostMapping("/deleteBiography")
+    @DeleteMapping("/deleteBiography")
     public ResponseEntity<?> deleteBiography(@RequestParam int cvId){
         Result result=this.cvService.deleteBiography(cvId);
         if(result.isSuccess()){

@@ -5,6 +5,7 @@ import com.alihocaoglu.hrms.busines.abstracts.UserService;
 import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.StaffDao;
 import com.alihocaoglu.hrms.entities.concretes.Staff;
+import com.alihocaoglu.hrms.entities.dtos.StaffUpdateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,27 @@ public class StaffManager implements StaffService {
     @Override
     public DataResult<List<Staff>> getAll() {
         return new SuccessDataResult<List<Staff>>(this.staffDao.findAll(),"Data listelendi");
+    }
+
+    @Override
+    public Result update(StaffUpdateDto staffUpdateDto) {
+
+        if(!this.staffDao.existsById(staffUpdateDto.getStaffId())){
+            return new ErrorResult("Böyle bir personel yok");
+        }else if(staffUpdateDto.getFirstName().length()<2){
+            return new ErrorResult("İsim 2 karakterden kısa olamaz");
+        }else if(staffUpdateDto.getLastName().length()<2){
+            return new ErrorResult("Soy isim 2 karakterden kısa olamaz");
+        }else if(!isEmailValid(staffUpdateDto.getEmail())){
+            return new ErrorResult("Geçerli bir email değil");
+        }
+
+        Staff staff=this.staffDao.getById(staffUpdateDto.getStaffId());
+        staff.setFirstName(staffUpdateDto.getFirstName());
+        staff.setLastName(staffUpdateDto.getLastName());
+        staff.setEmail(staffUpdateDto.getEmail());
+        this.staffDao.save(staff);
+        return new SuccessResult("Bilgiler kaydedildi");
     }
 
     private final String EMAIL_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+.(com|org|net|edu|gov|mil|biz|info|mobi)(.[A-Z]{2})?$";

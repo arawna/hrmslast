@@ -3,11 +3,15 @@ package com.alihocaoglu.hrms.busines.concretes;
 import com.alihocaoglu.hrms.busines.abstracts.*;
 import com.alihocaoglu.hrms.core.utilities.results.*;
 import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerDao;
+import com.alihocaoglu.hrms.dataAccess.abstracts.EmployerUpdateDao;
+import com.alihocaoglu.hrms.dataAccess.abstracts.StaffDao;
 import com.alihocaoglu.hrms.entities.concretes.Employer;
+import com.alihocaoglu.hrms.entities.concretes.EmployerUpdate;
 import com.alihocaoglu.hrms.entities.dtos.EmployerForRegisterDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -20,14 +24,18 @@ public class EmployerManager implements EmployerService {
     private ActivationByStaffService activationByStaffService;
     private ActivationCodeService activationCodeService;
     private EmailService emailService;
+    private EmployerUpdateDao employerUpdateDao;
+    private StaffDao staffDao;
 
     @Autowired
-    public EmployerManager(EmployerDao employerDao,UserService userService,ActivationByStaffService activationByStaffService,ActivationCodeService activationCodeService,EmailService emailService) {
+    public EmployerManager(EmployerDao employerDao,UserService userService,ActivationByStaffService activationByStaffService,ActivationCodeService activationCodeService,EmailService emailService,EmployerUpdateDao employerUpdateDao,StaffDao staffDao) {
         this.employerDao = employerDao;
         this.userService=userService;
         this.activationByStaffService=activationByStaffService;
         this.activationCodeService=activationCodeService;
         this.emailService=emailService;
+        this.employerUpdateDao=employerUpdateDao;
+        this.staffDao=staffDao;
     }
 
     @Override
@@ -51,6 +59,7 @@ public class EmployerManager implements EmployerService {
         employer.setCompanyName(employerDto.getCompanyName());
         employer.setWebSite(employerDto.getWebSite());
         employer.setPhoneNumber(employerDto.getPhoneNumber());
+        employer.setWaitingUpdate(false);
 
 
        if(userService.getByEmail(employer.getEmail()).getData() != null){
@@ -86,6 +95,51 @@ public class EmployerManager implements EmployerService {
             return new ErrorDataResult<Employer>("Böyle bir işveren yok");
         }
         return new SuccessDataResult<Employer>(this.employerDao.getById(id),"Data listelendi");
+    }
+
+    @Override
+    public Result update(EmployerUpdate employerUpdate) {
+        employerUpdate.setId(0);
+        employerUpdate.setCreateDay(LocalDate.now());
+
+        if(employerUpdate.getCompanyName().length()<2){
+            return new ErrorResult("Şirket adı 2 karakterden kısa olamaz");
+        }else if(employerUpdate.getPhoneNumber().length()!=11){
+            return new ErrorResult("Telefon numarası 11 haneli olmalıdır");
+        }else if(!isEmailValid(employerUpdate.getEmail())){
+            return new ErrorResult("Geçerli bir mail adresi giriniz");
+        }else if(this.employerDao.existsById(employerUpdate.getEmployerId())){
+            return new ErrorResult(("Böyle bir işveren yok"));
+        }
+        Employer employer=this.employerDao.getById(employerUpdate.getEmployerId());
+        this.employerUpdateDao.save(employerUpdate);
+        employer.setWaitingUpdate(true);
+        this.employerDao.save(employer);
+        return new SuccessResult("Güncelleme isteği gönderildi personelin onayı ardından görünür olacaktır");
+    }
+
+    @Override
+    public Result verifyUpdate(int employerUpdateId, int staffId) {
+        if(!this.employerUpdateDao.existsById(employerUpdateId)){
+            return new ErrorResult("Böyle bir güncelleme talebi yok");
+        }else if(!this.staffDao.existsById(staffId)){
+            return new ErrorResult("Böyle bir personel yok");
+        }
+        EmployerUpdate employerUpdate=this.employerUpdateDao.getById(employerUpdateId);
+        Employer employer=this.employerDao.getById(employerUpdate.getEmployerId());
+
+        employerUpdate.setVerifyed(true);
+        employerUpdate.setStaffId(staffId);
+        employerUpdate.setVerifyDate(LocalDate.now());
+        this.employerUpdateDao.save(employerUpdate);
+
+        employer.setEmail(employerUpdate.getEmail());
+        employer.setCompanyName(employerUpdate.getCompanyName());
+        employer.setPhoneNumber(employerUpdate.getPhoneNumber());
+        employer.setWebSite(employerUpdate.getWebSite());
+        employer.setWaitingUpdate(false);
+        this.employerDao.save(employer);
+        return new SuccessResult("Bilgiler güncellendi");
     }
 
 
