@@ -17,6 +17,7 @@ public interface JobAdDao extends JpaRepository<JobAd,Integer> {
     @Query("Select j from com.alihocaoglu.hrms.entities.concretes.JobAd j where ((:#{#filter.cityId}) IS NULL OR j.city.id IN (:#{#filter.cityId}))"
         +" and ((:#{#filter.jobPositionId}) IS NULL OR j.jobPosition.id IN (:#{#filter.jobPositionId}))"
         +" and ((:#{#filter.workPlaceId}) IS NULL OR j.workPlace.id IN (:#{#filter.workPlaceId}))"
-        +" and ((:#{#filter.workTimeId}) IS NULL OR j.workTime.id IN (:#{#filter.workTimeId}))")
+        +" and ((:#{#filter.workTimeId}) IS NULL OR j.workTime.id IN (:#{#filter.workTimeId}))"
+        +" and j.active=true")
     List<JobAd> getByFilter(@Param("filter")JobAdFilter jobAdFilter, Pageable pageable);
 }
