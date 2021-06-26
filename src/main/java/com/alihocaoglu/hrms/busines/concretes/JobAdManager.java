@@ -6,7 +6,10 @@ import com.alihocaoglu.hrms.dataAccess.abstracts.*;
 import com.alihocaoglu.hrms.entities.concretes.JobAd;
 import com.alihocaoglu.hrms.entities.concretes.JobAdActivation;
 import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
+import com.alihocaoglu.hrms.entities.dtos.JobAdFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -158,6 +161,12 @@ public class JobAdManager implements JobAdService {
     @Override
     public DataResult<List<JobAd>> getActiveAndCompanyId(int id) {
         return new SuccessDataResult<List<JobAd>>(this.jobAdDao.findByActiveTrueAndEmployer_Id(id),"Şirkere göre aktif iş işanları listelendi");
+    }
+
+    @Override
+    public DataResult<List<JobAd>> getByIsActiveAndPageNumberAndFilter(boolean isActive, int pageNumber, JobAdFilter jobAdFilter) {
+        Pageable pageable = PageRequest.of(pageNumber -1, 10);
+        return new SuccessDataResult<List<JobAd>>(this.jobAdDao.getByFilter(jobAdFilter, pageable),"Data listelendi");
     }
 
 

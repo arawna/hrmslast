@@ -7,6 +7,7 @@ import com.alihocaoglu.hrms.core.utilities.results.Result;
 import com.alihocaoglu.hrms.core.utilities.results.SuccessDataResult;
 import com.alihocaoglu.hrms.entities.concretes.JobAd;
 import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
+import com.alihocaoglu.hrms.entities.dtos.JobAdFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -99,5 +100,10 @@ public class JobAdController {
     @GetMapping("/getActiveAndCompanyId")
     public DataResult<List<JobAd>> getActiveAndCompanyId(@RequestParam int companyId){
         return this.jobAdService.getActiveAndCompanyId(companyId);
+    }
+
+    @GetMapping("/getByActiveAndFilter")
+    public Result getByActiveAndFilter(@RequestParam int pageNumber, JobAdFilter jobAdFilter){
+        return jobAdService.getByIsActiveAndPageNumberAndFilter(true,pageNumber,jobAdFilter);
     }
 }
