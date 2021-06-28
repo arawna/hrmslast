@@ -8,6 +8,7 @@ import com.alihocaoglu.hrms.entities.concretes.JobAdActivation;
 import com.alihocaoglu.hrms.entities.dtos.JobAdDto;
 import com.alihocaoglu.hrms.entities.dtos.JobAdFilter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -164,9 +165,9 @@ public class JobAdManager implements JobAdService {
     }
 
     @Override
-    public DataResult<List<JobAd>> getByIsActiveAndPageNumberAndFilter(boolean isActive, int pageNumber, JobAdFilter jobAdFilter) {
-        Pageable pageable = PageRequest.of(pageNumber -1, 10);
-        return new SuccessDataResult<List<JobAd>>(this.jobAdDao.getByFilter(jobAdFilter, pageable),"Data listelendi");
+    public DataResult<List<JobAd>> getByIsActiveAndPageNumberAndFilter(int pageNo, int pageSize, JobAdFilter jobAdFilter) {
+        Pageable pageable = PageRequest.of(pageNo -1, pageSize);
+        return new SuccessDataResult<List<JobAd>>(this.jobAdDao.getByFilter(jobAdFilter, pageable).getContent(), this.jobAdDao.getByFilter(jobAdFilter,pageable).getTotalElements()+"");
     }
 
 

@@ -102,8 +102,8 @@ public class JobAdController {
         return this.jobAdService.getActiveAndCompanyId(companyId);
     }
 
-    @GetMapping("/getByActiveAndFilter")
-    public Result getByActiveAndFilter(@RequestParam int pageNumber, JobAdFilter jobAdFilter){
-        return jobAdService.getByIsActiveAndPageNumberAndFilter(true,pageNumber,jobAdFilter);
+    @PostMapping("/getByActiveAndFilter")
+    public Result getByActiveAndFilter(@RequestParam int pageNo,@RequestParam int pageSize,@RequestBody JobAdFilter jobAdFilter){
+        return jobAdService.getByIsActiveAndPageNumberAndFilter(pageNo,pageSize,jobAdFilter);
     }
 }
