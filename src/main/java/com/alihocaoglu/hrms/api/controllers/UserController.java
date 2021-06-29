@@ -3,11 +3,11 @@ package com.alihocaoglu.hrms.api.controllers;
 import com.alihocaoglu.hrms.busines.abstracts.UserService;
 import com.alihocaoglu.hrms.core.utilities.results.DataResult;
 import com.alihocaoglu.hrms.entities.concretes.User;
+import com.alihocaoglu.hrms.entities.dtos.UserLoginDto;
+import com.alihocaoglu.hrms.entities.dtos.UserLoginReturnDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +26,15 @@ public class UserController {
     @GetMapping("/getall")
     public DataResult<List<User>> getAll(){
         return this.userService.getAll();
+    }
+
+    @PostMapping("/login")
+    ResponseEntity<?> login(@RequestBody UserLoginDto userLoginDto){
+        DataResult<UserLoginReturnDto> result = this.userService.login(userLoginDto);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }else {
+            return ResponseEntity.badRequest().body(result);
+        }
     }
 }
