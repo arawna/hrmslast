@@ -41,7 +41,7 @@ public class JobAdFavoritesController {
     }
 
     @DeleteMapping("/removeFavorite")
-    public ResponseEntity<?> removeFavorite(int favoriteId){
+    public ResponseEntity<?> removeFavorite(@RequestParam int favoriteId){
         Result result = this.jobAdFavoritesService.removeFavorite(favoriteId);
         if(result.isSuccess()){
             return ResponseEntity.ok(result);
