@@ -88,7 +88,8 @@ public class CvManager implements CvService {
         Cv cv=this.cvDao.getById(cvId);
         cv.setGithub(null);
         this.cvDao.save(cv);
-        return new SuccessResult("Github adresi silindi");
+
+        return new SuccessResult("Github adresi kaldırıldı");
     }
 
     @Override
