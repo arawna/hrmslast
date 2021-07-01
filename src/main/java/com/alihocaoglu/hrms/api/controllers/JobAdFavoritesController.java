@@ -39,4 +39,13 @@ public class JobAdFavoritesController {
         }
         return ResponseEntity.badRequest().body(result);
     }
+
+    @DeleteMapping("/removeFavorite")
+    public ResponseEntity<?> removeFavorite(int favoriteId){
+        Result result = this.jobAdFavoritesService.removeFavorite(favoriteId);
+        if(result.isSuccess()){
+            return ResponseEntity.ok(result);
+        }
+        return ResponseEntity.badRequest().body(result);
+    }
 }

@@ -52,4 +52,13 @@ public class JobAdFavoritesManager implements JobAdFavoritesService {
         this.jobAdFavoritesDao.save(jobAdFavorites);
         return new SuccessResult("İlan facorilere eklendi");
     }
+
+    @Override
+    public Result removeFavorite(int favoriteId) {
+        if(!this.jobAdFavoritesDao.existsById(favoriteId)){
+            return new ErrorResult("Böyle bir favori ilan yok");
+        }
+        this.jobAdFavoritesDao.deleteById(favoriteId);
+        return new SuccessResult("İlan favorilerden kandırıldı");
+    }
 }
