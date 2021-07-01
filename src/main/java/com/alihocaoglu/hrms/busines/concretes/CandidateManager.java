@@ -77,6 +77,11 @@ public class CandidateManager implements CandidateService {
 
     }
 
+    @Override
+    public DataResult<List<Candidate>> getMailVerifyTrue() {
+        return new SuccessDataResult<List<Candidate>>(this.candidateDao.findByMailVerifyTrue(),"Data listelendi");
+    }
+
     private final String EMAIL_PATTERN = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+.(com|org|net|edu|gov|mil|biz|info|mobi)(.[A-Z]{2})?$";
 
     public boolean isEmailValid(String emailInput) {

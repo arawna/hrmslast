@@ -12,4 +12,5 @@ public interface CandidateService {
     DataResult<Candidate> getByNationalNumber(String nationalNumber);
     DataResult<Candidate> getByEmail(String email);
     Result add(CandidateForRegisterDto candidateForRegisterDto);
+    DataResult<List<Candidate>> getMailVerifyTrue();
 }

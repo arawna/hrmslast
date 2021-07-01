@@ -36,4 +36,9 @@ public class CandidateController {
         }
         return ResponseEntity.badRequest().body(result);
     }
+
+    @GetMapping("/getMailVerifyTrue")
+    DataResult<List<Candidate>> getMailVerifyTrue(){
+        return this.candidateService.getMailVerifyTrue();
+    }
 }
