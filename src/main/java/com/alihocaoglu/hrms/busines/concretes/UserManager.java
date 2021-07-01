@@ -49,6 +49,8 @@ public class UserManager implements UserService {
             return new ErrorDataResult<UserLoginReturnDto>("Hatalı email girdiniz");
         }else if(!user.getPassword().equals(userLoginDto.getPassword())){
             return new ErrorDataResult<UserLoginReturnDto>("Hatalı şifre girdiniz");
+        }else if(!user.isMailVerify()){
+            return new ErrorDataResult<UserLoginReturnDto>("Giriş yapmak için email onayı yapmanız gerekmektedir");
         }
         UserLoginReturnDto userLoginReturnDto = new UserLoginReturnDto();
         userLoginReturnDto.setId(user.getId());
