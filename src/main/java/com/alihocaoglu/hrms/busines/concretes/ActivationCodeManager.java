@@ -70,6 +70,9 @@ public class ActivationCodeManager implements ActivationCodeService {
         }
 
         User user = userDao.getById(activationCodeDao.findByCode(code).getUserId());
+        if(user.isMailVerify()){
+            return new ErrorResult("Mail zaten onaylandı");
+        }
         user.setMailVerify(true);
         userDao.save(user);
 
