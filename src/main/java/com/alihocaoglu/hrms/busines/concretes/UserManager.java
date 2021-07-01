@@ -71,4 +71,9 @@ public class UserManager implements UserService {
 
         return new SuccessDataResult<UserLoginReturnDto>(userLoginReturnDto,"Giriş yapıldı");
     }
+
+    @Override
+    public DataResult<List<User>> getVerifyedUsers() {
+        return new SuccessDataResult<List<User>>(this.userDao.findByMailVerifyTrue(),"Data listelendi");
+    }
 }

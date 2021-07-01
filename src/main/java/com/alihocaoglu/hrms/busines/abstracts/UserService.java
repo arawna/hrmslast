@@ -11,4 +11,5 @@ public interface UserService {
     DataResult<List<User>> getAll();
     DataResult<User> getByEmail(String email);
     DataResult<UserLoginReturnDto> login(UserLoginDto userLoginDto);
+    DataResult<List<User>> getVerifyedUsers();
 }

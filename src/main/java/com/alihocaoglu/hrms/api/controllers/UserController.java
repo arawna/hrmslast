@@ -37,4 +37,9 @@ public class UserController {
             return ResponseEntity.badRequest().body(result);
         }
     }
+
+    @GetMapping("/getVerifyedUsers")
+    DataResult<List<User>> getVerifyedUsers(){
+        return this.userService.getVerifyedUsers();
+    }
 }
