@@ -42,6 +42,8 @@ public class JobAdFavoritesManager implements JobAdFavoritesService {
             return new ErrorResult("Böyle bir kullanıcı yok");
         }else if(!this.jobAdDao.existsById(jobAdId)){
             return new ErrorResult("Böyle bir ilan yok");
+        }else if(this.jobAdFavoritesDao.existsByCandidate_IdAndJobAd_Id(candidateId,jobAdId)){
+            return new ErrorResult("Bu ilan zaten favorilerinizde");
         }
 
         JobAdFavorites jobAdFavorites=new JobAdFavorites();

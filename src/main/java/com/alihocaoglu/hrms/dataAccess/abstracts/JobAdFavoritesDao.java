@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface JobAdFavoritesDao extends JpaRepository<JobAdFavorites,Integer> {
     List<JobAdFavorites> findByCandidateId(int id);
+    boolean existsByCandidate_IdAndJobAd_Id(int candidateId,int JobAdId);
 }
