@@ -18,9 +18,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Map;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/images")
-@CrossOrigin
 public class ImagesController {
 
     private CloudinaryService cloudinaryService;
@@ -39,6 +39,7 @@ public class ImagesController {
         return ResponseEntity.ok(this.imageService.getAll());
     }
 
+    @CrossOrigin
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam MultipartFile multipartFile ,@RequestParam int cvId){
         Result result=this.imageService.update(multipartFile,cvId);
