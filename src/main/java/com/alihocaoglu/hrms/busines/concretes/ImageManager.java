@@ -62,9 +62,9 @@ public class ImageManager implements ImageService {
             try {
                 Map result=cloudinaryService.delete(image.getImageId());
                 Map result2=cloudinaryService.upload(multipartFile);
-                image.setName((String)result.get("original_filename"));
-                image.setImageUrl((String)result.get("url"));
-                image.setImageId((String)result.get("public_id"));
+                image.setName((String)result2.get("original_filename"));
+                image.setImageUrl((String)result2.get("url"));
+                image.setImageId((String)result2.get("public_id"));
                 this.imageDao.save(image);
                 return new SuccessResult("Başarıyla yüklendi");
             }catch (IOException exception){
