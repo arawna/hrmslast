@@ -50,7 +50,7 @@ public class JobAdFavoritesManager implements JobAdFavoritesService {
         jobAdFavorites.setCandidate(this.candidateDao.getById(candidateId));
         jobAdFavorites.setJobAd(this.jobAdDao.getById(jobAdId));
         this.jobAdFavoritesDao.save(jobAdFavorites);
-        return new SuccessResult("İlan facorilere eklendi");
+        return new SuccessResult("İlan favorilere eklendi");
     }
 
     @Override
