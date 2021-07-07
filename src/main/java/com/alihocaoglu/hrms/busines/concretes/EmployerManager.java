@@ -108,7 +108,7 @@ public class EmployerManager implements EmployerService {
             return new ErrorResult("Telefon numarası 11 haneli olmalıdır");
         }else if(!isEmailValid(employerUpdate.getEmail())){
             return new ErrorResult("Geçerli bir mail adresi giriniz");
-        }else if(this.employerDao.existsById(employerUpdate.getEmployerId())){
+        }else if(!this.employerDao.existsById(employerUpdate.getEmployerId())){
             return new ErrorResult(("Böyle bir işveren yok"));
         }
         Employer employer=this.employerDao.getById(employerUpdate.getEmployerId());
