@@ -21,7 +21,7 @@ public class EmployerUpdate {
     private int id;
 
     @Column(name = "employer_id")
-    private int employerId;
+    private Integer employerId;
 
     @Column(name = "company_name")
     private String companyName;
@@ -45,7 +45,7 @@ public class EmployerUpdate {
 
     @Column(name = "staff_id")
     @JsonIgnore
-    private int staffId;
+    private Integer staffId;
 
     @Column(name = "verify_date")
     @JsonIgnore

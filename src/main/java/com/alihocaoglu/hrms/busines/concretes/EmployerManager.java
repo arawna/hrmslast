@@ -101,8 +101,19 @@ public class EmployerManager implements EmployerService {
     public Result update(EmployerUpdate employerUpdate) {
         employerUpdate.setId(0);
         employerUpdate.setCreateDay(LocalDate.now());
+        employerUpdate.setStaffId(null);
 
-        if(employerUpdate.getCompanyName().length()<2){
+        if(employerUpdate.getEmployerId() == null){
+            return new ErrorResult("İş veren id boş birakılamaz");
+        }else if(employerUpdate.getEmail()==null){
+            return new ErrorResult("Email boş bırakılamaz");
+        }else if(employerUpdate.getCompanyName()==null){
+            return new ErrorResult("Şirket adı boş bırakılamaz");
+        }else if(employerUpdate.getPhoneNumber()==null){
+            return new ErrorResult("Telefon numarası boş bırakılamaz");
+        }else if(employerUpdate.getWebSite()==null){
+            return new ErrorResult("Web sitesi boş bırakılamaz");
+        }else if(employerUpdate.getCompanyName().length()<2){
             return new ErrorResult("Şirket adı 2 karakterden kısa olamaz");
         }else if(employerUpdate.getPhoneNumber().length()!=11){
             return new ErrorResult("Telefon numarası 11 haneli olmalıdır");
